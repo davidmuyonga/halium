@@ -462,6 +462,7 @@ mountroot() {
 	if [ -n "/dev/disk/by-partlabel/super" ]; then
 		tell_kmsg "trying to parse and dmsetup subpartitions from super partition"
 		/sbin/parse-android-dynparts /dev/disk/by-partlabel/super | sh
+		dmsetup mknodes
 	fi
 
 	# Set $_syspart if it is specified as systempart= on the command line
