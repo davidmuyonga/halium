@@ -89,14 +89,16 @@ if [ -n "$deviceinfo_kernel_apply_overlay" ] && $deviceinfo_kernel_apply_overlay
     "$SCRIPT/build-ufdt-apply-overlay.sh" "${TMPDOWN}"
 fi
 
+# Install kernel modules to /usr/lib
+KERNEL_MODULE_INSTALL_DIR="${TMP}/system/usr"
 if $deviceinfo_kernel_clang_compile; then
     CC=clang \
     CLANG_TRIPLE=${deviceinfo_arch}-linux-gnu- \
     PATH="$CLANG_PATH/bin:$GCC_PATH/bin:$GCC_ARM32_PATH/bin:${PATH}" \
-    "$SCRIPT/build-kernel.sh" "${TMPDOWN}" "${TMP}/system"
+    "$SCRIPT/build-kernel.sh" "${TMPDOWN}" "${KERNEL_MODULE_INSTALL_DIR}"
 else
     PATH="$GCC_PATH/bin:${PATH}" \
-    "$SCRIPT/build-kernel.sh" "${TMPDOWN}" "${TMP}/system"
+    "$SCRIPT/build-kernel.sh" "${TMPDOWN}" "${KERNEL_MODULE_INSTALL_DIR}"
 fi
 
 if [ -n "$deviceinfo_prebuilt_dtbo" ]; then
